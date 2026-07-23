@@ -1,0 +1,320 @@
+.mainVoluntariado {
+  min-height: 100vh;
+  padding: 24px 4%;
+  background-color: #f8f9fa;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.containerVoluntariado {
+  width: 100%;
+  max-width: 1140px;
+  padding: 55px 35px 35px;
+
+  background-color: white;
+  border: 1px solid #d9dee5;
+  border-radius: 12px;
+}
+
+.tituloPagina {
+  margin-bottom: 35px;
+
+  h1 {
+    margin-bottom: 10px;
+    color: #1f2937;
+    font-size: 1.9rem;
+  }
+
+  p {
+    color: #647084;
+    font-size: 1rem;
+  }
+}
+
+.conteudoVoluntariado {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: stretch;
+  gap: 25px;
+}
+
+.formularioVoluntario,
+.acoesDisponiveis {
+  min-height: 455px;
+  padding: 20px;
+
+  border: 1px solid #d9dee5;
+  border-radius: 10px;
+
+  background-color: white;
+}
+
+.formularioVoluntario {
+  h2 {
+    margin-bottom: 18px;
+    color: #1f2937;
+    font-size: 1rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+
+.acoesDisponiveis {
+  h2 {
+    margin-bottom: 18px;
+    color: #1f2937;
+    font-size: 1rem;
+  }
+}
+
+.campo {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  label {
+    color: #374151;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  input,
+  select {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+
+    border: 1px solid #d8dee8;
+    border-radius: 6px;
+    outline: none;
+
+    background-color: white;
+    color: #374151;
+
+    font-family: inherit;
+    font-size: 0.85rem;
+
+    box-sizing: border-box;
+
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+
+    &:focus {
+      border-color: #2fa34f;
+      box-shadow: 0 0 10px rgba(47, 163, 79, 0.15);
+    }
+  }
+
+  input::placeholder {
+    color: #94a0b3;
+  }
+
+  select {
+    cursor: pointer;
+  }
+}
+
+.btnCadastro {
+  width: 100%;
+  height: 42px;
+  margin-top: 4px;
+
+  border: none;
+  border-radius: 6px;
+
+  background-color: #2fa34f;
+  color: white;
+
+  font-family: inherit;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+
+  &:hover {
+    background-color: #24863f;
+    transform: translateY(-1px);
+  }
+}
+
+.listaAcoes {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardAcao {
+  min-height: 105px;
+  padding: 20px 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+
+  border-bottom: 1px solid #e8ebef;
+
+  transition:
+    background-color 0.25s,
+    transform 0.25s;
+
+  &:hover {
+    background-color: #fafafa;
+    transform: translateY(-2px);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.informacoesAcao {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+  }
+
+  h3 {
+    margin-bottom: 6px;
+    color: #263238;
+    font-size: 0.94rem;
+  }
+
+  p {
+    color: #728091;
+    font-size: 0.8rem;
+  }
+}
+
+.periodo {
+  margin: 0;
+  padding: 6px 14px;
+
+  border-radius: 20px;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.manha {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.tarde {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+.noite {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+/* ========================= */
+/* RESPONSIVIDADE            */
+/* ========================= */
+
+@media (max-width: 900px) {
+  .conteudoVoluntariado {
+    grid-template-columns: 1fr;
+  }
+
+  .formularioVoluntario,
+  .acoesDisponiveis {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainVoluntariado {
+    padding: 25px 5%;
+  }
+
+  .containerVoluntariado {
+    padding: 35px 20px 25px;
+  }
+
+  .tituloPagina {
+    text-align: center;
+
+    h1 {
+      font-size: 1.7rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .mainVoluntariado {
+    padding: 20px 4%;
+  }
+
+  .containerVoluntariado {
+    padding: 30px 14px 20px;
+  }
+
+  .tituloPagina {
+    margin-bottom: 25px;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
+
+  .formularioVoluntario,
+  .acoesDisponiveis {
+    padding: 16px;
+  }
+
+  .cardAcao {
+    min-height: auto;
+    padding: 18px 8px;
+
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .informacoesAcao {
+    align-items: flex-start;
+    gap: 10px;
+
+    img {
+      width: 44px;
+      height: 44px;
+    }
+
+    h3 {
+      font-size: 0.85rem;
+    }
+
+    p {
+      font-size: 0.75rem;
+    }
+  }
+
+  .periodo {
+    padding: 5px 9px;
+    font-size: 0.68rem;
+  }
+}
