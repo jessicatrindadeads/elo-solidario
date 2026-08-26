@@ -1,138 +1,124 @@
 # Elo Solidário
 
-Plataforma web desenvolvida para conectar pessoas que desejam ajudar com instituições e comunidades que precisam de doações.
+Plataforma Full Stack criada para organizar necessidades de doação em cenários de enchentes e conectar pessoas afetadas, instituições, doadores e voluntários.
 
-O projeto foi criado com foco em acessibilidade, responsividade e experiência do usuário, permitindo visualizar necessidades urgentes de forma simples e intuitiva.
+O projeto nasceu a partir de um desafio técnico sobre desastres causados por chuvas intensas no Brasil. Entre os problemas apresentados, foi escolhida a **organização de doações**, reduzindo a falta ou o excesso de itens em diferentes locais por meio de informações centralizadas e atualizadas.
 
----
+## Solução proposta
 
-# Status do Projeto
+O Elo Solidário permite:
 
-🚧 Projeto em desenvolvimento.
+- consultar necessidades de doação e filtrá-las por item, local, categoria e prioridade;
+- cadastrar novas necessidades;
+- registrar interesse em realizar uma doação;
+- cadastrar voluntários e suas disponibilidades;
+- organizar os dados em uma API REST integrada a um banco PostgreSQL.
 
-Atualmente o foco está na construção das interfaces front-end e responsividade da aplicação.
+## Status
 
-## Próximas etapas
+🚧 **Em desenvolvimento**
 
-- Finalização das páginas restantes
-- Integração com API
-- Desenvolvimento do back-end
-- Sistema de autenticação
-- Persistência de dados
-- Cadastro e gerenciamento de doações
+- Front-end React: concluído e publicado.
+- API Node.js/Express: estrutura e endpoints iniciais concluídos.
+- PostgreSQL: esquema inicial e migration concluídos.
+- Integração front-end/API: próxima etapa.
+- Documentação Postman: coleção inicial criada.
+- Publicação da API e conexão com o PostgreSQL: próxima etapa.
 
----
+## Estrutura do sistema
 
-# Funcionalidades
+### Front-end
 
-- Página inicial moderna e responsiva
-- Cards de necessidades urgentes
-- Sistema visual de prioridade
-- Layout adaptado para desktop, tablet e mobile
-- Componentização com React
-- Estilização com SCSS Modules
+Aplicação React com Vite, React Router e Sass Modules. Possui páginas de Home, Doações, Cadastro e Voluntariado, além de menu responsivo, filtros, formulários demonstrativos e página 404.
 
----
+### Back-end
 
-# Tecnologias Utilizadas
+API REST em Node.js e Express, organizada em rotas, controllers e repositories. Inclui validação de entrada, tratamento centralizado de erros, CORS, Helmet e testes automatizados.
 
-- React
-- Vite
+### Banco de dados
+
+PostgreSQL com tabelas para:
+
+- necessidades;
+- voluntários;
+- interesses em doações.
+
+Relacionamentos, restrições, índices e migration estão em [`server/migrations`](server/migrations).
+
+## Tecnologias
+
+- React e Vite
 - JavaScript
-- SCSS Modules
-- HTML5
-- CSS3
-- Git
-- GitHub
+- React Router
+- Sass Modules
+- Node.js e Express
+- PostgreSQL e `pg`
+- GitHub Actions
+- Vercel
+- Postman (coleção inicial em `server/postman`)
 
----
+## Como executar
 
-# Estrutura do Projeto
+### Pré-requisitos
 
-```bash
-src/
- ├── assets/
- ├── components/
- │    └── infoCard/
- ├── pages/
- │    ├── home/
- │    └── voluntariado/
- ├── routes/
- ├── App.jsx
- └── main.jsx
-```
+- Node.js 20 ou superior
+- PostgreSQL
 
----
-
-# Como Executar o Projeto
-
-## Clone o repositório
+### Front-end
 
 ```bash
-git clone https://github.com/JessicaTrindade013/elo-solidario.git
-```
-
-## Acesse a pasta do projeto
-
-```bash
+git clone https://github.com/jessicatrindadeads/elo-solidario.git
 cd elo-solidario
-```
-
-## Instale as dependências
-
-```bash
 npm install
-```
-
-## Execute o projeto
-
-```bash
 npm run dev
 ```
 
----
+O front-end será iniciado em `http://localhost:5173`.
 
-# Responsividade
+### API e banco de dados
 
-O projeto foi desenvolvido utilizando abordagem responsiva para garantir boa experiência em diferentes dispositivos:
+```bash
+cd server
+npm install
+```
 
-- Desktop
-- Notebook
-- Tablet
-- Smartphones
+Copie `server/.env.example` para `server/.env`, configure a conexão PostgreSQL e execute:
 
----
+```bash
+npm run db:migrate
+npm run dev
+```
 
-# Aprendizados
+A API será iniciada em `http://localhost:3333/api`.
 
-Durante o desenvolvimento deste projeto foram praticados conceitos como:
+## Endpoints iniciais
 
-- Componentização
-- Responsividade
-- Organização de pastas
-- CSS Modules
-- Grid Layout
-- Flexbox
-- Versionamento com Git
-- Publicação no GitHub
+| Método | Rota | Finalidade |
+| --- | --- | --- |
+| GET | `/api/health` | Verificar a disponibilidade da API |
+| GET | `/api/necessidades` | Listar e filtrar necessidades |
+| GET | `/api/necessidades/:id` | Consultar uma necessidade |
+| POST | `/api/necessidades` | Cadastrar uma necessidade |
+| PUT | `/api/necessidades/:id` | Atualizar uma necessidade |
+| DELETE | `/api/necessidades/:id` | Excluir uma necessidade |
+| GET | `/api/voluntarios` | Listar voluntários |
+| POST | `/api/voluntarios` | Cadastrar um voluntário |
+| POST | `/api/interesses-doacao` | Registrar interesse em doar |
 
----
+## Testes e qualidade
 
-# Melhorias Futuras
+```bash
+npm run lint
+npm run build
+npm run test:api
+```
 
-- Integração com API REST
-- Sistema de login e autenticação
-- Cadastro de campanhas
-- Página de detalhes das doações
-- Área administrativa
-- Banco de dados
-- Dashboard de gerenciamento
+O GitHub Actions executa essas verificações automaticamente em pushes e pull requests para a `main`.
 
----
+## Aplicação
 
-# Autora
+[Acessar o Elo Solidário na Vercel](https://elo-solidario.vercel.app)
 
-Desenvolvido por Jessica Trindade.
+## Autora
 
-GitHub:  
-https://github.com/JessicaTrindade013
+Desenvolvido por [Jéssica Trindade](https://github.com/jessicatrindadeads).
