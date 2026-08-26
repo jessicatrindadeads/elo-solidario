@@ -1,24 +1,41 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import S from './doacao.module.scss';
 import aguaPotavel from '../../assets/img/aguapotavel.png';
 import alimentos from '../../assets/img/alimentos.webp';
 import roupa from '../../assets/img/camiseta.webp';
 import higiene from '../../assets/img/higieneproduto.png';
+import { api, getApiError } from '../../services/api';
+
+const imagens = { Água: aguaPotavel, Alimentos: alimentos, Roupas: roupa, Higiene: higiene };
+const formatarPrioridade = (valor) => valor.charAt(0).toUpperCase() + valor.slice(1);
 
 export default function Doacao() {
   
-  const necessidades = [
-    { id: 1, item: "Água Potável", categoria: "Água", local: "Centro Comunitário", qtd: "100 garrafas", status: "Urgente", img: aguaPotavel },
-    { id: 2, item: "Alimentos Não Perecíveis", categoria: "Alimentos", local: "Escola Municipal", qtd: "50 unidades", status: "Urgente", img: alimentos },
-    { id: 3, item: "Roupas", categoria: "Roupas", local: "Abrigo São José", qtd: "30 conjuntos", status: "Importante", img: roupa },
-    { id: 4, item: "Produtos de Higiene", categoria: "Higiene", local: "Centro de Apoio", qtd: "80 kits", status: "Normal", img: higiene },
-  ];
-
+  const [necessidades, setNecessidades] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState("");
   const [busca, setBusca] = useState("");
   const [categoria, setCategoria] = useState("");
   const [prioridade, setPrioridade] = useState("");
   const [selecionada, setSelecionada] = useState(null);
   const [mensagem, setMensagem] = useState("");
+  const [enviando, setEnviando] = useState(false);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    api.get('/necessidades?status=aberta', { signal: controller.signal })
+      .then(({ data }) => setNecessidades(data.data.map((item) => ({
+        ...item,
+        qtd: `${item.quantidade} ${item.unidade}`,
+        status: formatarPrioridade(item.prioridade),
+        img: imagens[item.categoria] || alimentos,
+      }))))
+      .catch((error) => {
+        if (error.code !== 'ERR_CANCELED') setErro(getApiError(error, 'Não foi possível carregar as necessidades.'));
+      })
+      .finally(() => setCarregando(false));
+    return () => controller.abort();
+  }, []);
 
   const resultados = necessidades.filter((necessidade) => {
     const termo = busca.toLocaleLowerCase("pt-BR");
@@ -27,10 +44,25 @@ export default function Doacao() {
       && (!prioridade || necessidade.status === prioridade);
   });
 
-  function confirmarDoacao(event) {
+  async function confirmarDoacao(event) {
     event.preventDefault();
-    setMensagem(`Interesse em doar ${selecionada.item} registrado! Entraremos em contato.`);
-    setSelecionada(null);
+    const dados = Object.fromEntries(new FormData(event.currentTarget));
+    setEnviando(true);
+    setMensagem("");
+    try {
+      await api.post('/interesses-doacao', {
+        necessidadeId: selecionada.id,
+        nomeDoador: dados.nome,
+        contato: dados.contato,
+        quantidade: Number(dados.quantidade),
+      });
+      setMensagem(`Interesse em doar ${selecionada.item} registrado! Entraremos em contato.`);
+      setSelecionada(null);
+    } catch (error) {
+      setMensagem(getApiError(error, 'Não foi possível registrar seu interesse. Tente novamente.'));
+    } finally {
+      setEnviando(false);
+    }
   }
 
   return (
@@ -73,6 +105,8 @@ export default function Doacao() {
       <div className={S.feedback} role="status" aria-live="polite">{mensagem}</div>
 
       <section className={S.listaCards}>
+        {carregando && <p className={S.vazio}>Carregando necessidades...</p>}
+        {erro && <p className={S.vazio} role="alert">{erro}</p>}
         {resultados.map((necessidade) => (
           <article
             key={necessidade.id}
@@ -113,7 +147,7 @@ export default function Doacao() {
             </button>
           </article>
         ))}
-        {resultados.length === 0 && <p className={S.vazio}>Nenhuma necessidade encontrada com esses filtros.</p>}
+        {!carregando && !erro && resultados.length === 0 && <p className={S.vazio}>Nenhuma necessidade encontrada com esses filtros.</p>}
       </section>
 
       {selecionada && (
@@ -129,7 +163,7 @@ export default function Doacao() {
               <input id="contatoDoador" name="contato" required />
               <label htmlFor="quantidadeDoacao">Quantidade oferecida</label>
               <input id="quantidadeDoacao" name="quantidade" type="number" min="1" required />
-              <button type="submit">Confirmar interesse</button>
+              <button type="submit" disabled={enviando}>{enviando ? 'Enviando...' : 'Confirmar interesse'}</button>
             </form>
           </section>
         </div>

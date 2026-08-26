@@ -1,16 +1,27 @@
 import S from "./cadastro.module.scss";
 import cadastroImg from "../../assets/img/cadastro.jpeg";
 import { useState } from "react";
+import { api, getApiError } from "../../services/api";
 
 export default function Cadastro() {
   const [mensagem, setMensagem] = useState("");
+  const [enviando, setEnviando] = useState(false);
 
-  function cadastrar(event) {
+  async function cadastrar(event) {
     event.preventDefault();
     const form = event.currentTarget;
-    const item = new FormData(form).get("item");
-    setMensagem(`Necessidade de ${item} cadastrada para demonstração.`);
-    form.reset();
+    const dados = Object.fromEntries(new FormData(form));
+    setEnviando(true);
+    setMensagem("");
+    try {
+      await api.post("/necessidades", { ...dados, quantidade: Number(dados.quantidade) });
+      setMensagem(`Necessidade de ${dados.item} cadastrada com sucesso.`);
+      form.reset();
+    } catch (error) {
+      setMensagem(getApiError(error, "Não foi possível cadastrar. Tente novamente."));
+    } finally {
+      setEnviando(false);
+    }
   }
 
   return (
@@ -38,6 +49,18 @@ export default function Cadastro() {
                 placeholder="Ex: Água, Alimentos, Roupas..."
                 required
               />
+            </div>
+
+            <div className={S.campo}>
+              <label htmlFor="categoria">Categoria <strong>*</strong></label>
+              <select id="categoria" name="categoria" required>
+                <option value="">Selecione a categoria</option>
+                <option value="Água">Água</option>
+                <option value="Alimentos">Alimentos</option>
+                <option value="Roupas">Roupas</option>
+                <option value="Higiene">Higiene</option>
+                <option value="Outros">Outros</option>
+              </select>
             </div>
 
             <div className={S.campo}>
@@ -98,8 +121,8 @@ export default function Cadastro() {
               </select>
             </div>
 
-            <button type="submit" className={S.btnCadastrar}>
-              Cadastrar Necessidade
+            <button type="submit" className={S.btnCadastrar} disabled={enviando}>
+              {enviando ? "Cadastrando..." : "Cadastrar Necessidade"}
             </button>
             <p className={S.feedback} role="status" aria-live="polite">{mensagem}</p>
           </form>
