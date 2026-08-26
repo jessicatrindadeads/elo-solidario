@@ -16,20 +16,20 @@ O Elo Solidário permite:
 
 ## Status
 
-🚧 **Em desenvolvimento**
+✅ **Versão Full Stack funcional e publicada**
 
-- Front-end React: concluído e publicado.
-- API Node.js/Express: estrutura e endpoints iniciais concluídos.
-- PostgreSQL: esquema inicial e migration concluídos.
-- Integração front-end/API: próxima etapa.
-- Documentação Postman: coleção inicial criada.
-- Publicação da API e conexão com o PostgreSQL: próxima etapa.
+- Front-end React publicado na Vercel.
+- API Node.js/Express publicada no Render.
+- PostgreSQL hospedado no Supabase.
+- Formulários e listagens integrados à API real.
+- Migrations e dados iniciais executados automaticamente no deploy.
+- Coleção Postman com o fluxo CRUD da API.
 
 ## Estrutura do sistema
 
 ### Front-end
 
-Aplicação React com Vite, React Router e Sass Modules. Possui páginas de Home, Doações, Cadastro e Voluntariado, além de menu responsivo, filtros, formulários demonstrativos e página 404.
+Aplicação React com Vite, React Router, Axios e Sass Modules. Possui páginas de Home, Doações, Cadastro e Voluntariado, menu responsivo, filtros, formulários conectados à API e página 404.
 
 ### Back-end
 
@@ -37,7 +37,7 @@ API REST em Node.js e Express, organizada em rotas, controllers e repositories. 
 
 ### Banco de dados
 
-PostgreSQL com tabelas para:
+PostgreSQL hospedado no Supabase com tabelas para:
 
 - necessidades;
 - voluntários;
@@ -73,7 +73,7 @@ npm install
 npm run dev
 ```
 
-O front-end será iniciado em `http://localhost:5173`.
+O front-end será iniciado em `http://localhost:5173`. Por padrão, ele acessa a API local em `http://localhost:3333/api`. Para usar outro endereço, copie `.env.example` para `.env` e altere `VITE_API_URL`.
 
 ### API e banco de dados
 
@@ -115,9 +115,12 @@ npm run test:api
 
 O GitHub Actions executa essas verificações automaticamente em pushes e pull requests para a `main`.
 
-## Aplicação
+## Aplicação publicada
 
-[Acessar o Elo Solidário na Vercel](https://elo-solidario.vercel.app)
+- [Front-end na Vercel](https://elo-solidario.vercel.app)
+- [API no Render](https://elo-solidario-api.onrender.com/api/health)
+
+> O serviço gratuito do Render pode levar alguns segundos para responder ao primeiro acesso após um período sem uso.
 
 ## Autora
 

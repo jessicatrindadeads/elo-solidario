@@ -11,11 +11,13 @@ API REST do Elo Solidário, construída com Node.js, Express e PostgreSQL.
 
 A API ficará disponível em `http://localhost:3333/api`.
 
-## Deploy recomendado
+## Deploy
 
-O arquivo `render.yaml` na raiz do projeto configura a API no plano gratuito do Render. No serviço publicado, informe `DATABASE_URL` com a connection string do projeto PostgreSQL no Supabase. A inicialização de produção executará a migration antes de abrir a API.
+O arquivo `render.yaml` na raiz configura a API no plano gratuito do Render. O serviço utiliza o PostgreSQL do Supabase por meio da variável protegida `DATABASE_URL`. A inicialização de produção executa todas as migrations SQL em ordem antes de abrir a API.
 
-A coleção para importação no Postman está em `server/postman/Elo-Solidario-API.postman_collection.json`.
+API publicada: `https://elo-solidario-api.onrender.com/api`
+
+A coleção para importação no Postman está em `server/postman/Elo-Solidario-API.postman_collection.json`. Ela utiliza a API publicada por padrão; para testes locais, altere a variável `baseUrl` para `http://localhost:3333/api`.
 
 ## Endpoints iniciais
 
