@@ -13,7 +13,7 @@ A API ficará disponível em `http://localhost:3333/api`.
 
 ## Deploy recomendado
 
-O arquivo `render.yaml` na raiz do projeto configura a API para o Render. No serviço publicado, informe `DATABASE_URL` com a connection string do projeto PostgreSQL no Supabase. O Render executará a migration antes de iniciar a API.
+O arquivo `render.yaml` na raiz do projeto configura a API no plano gratuito do Render. No serviço publicado, informe `DATABASE_URL` com a connection string do projeto PostgreSQL no Supabase. A inicialização de produção executará a migration antes de abrir a API.
 
 A coleção para importação no Postman está em `server/postman/Elo-Solidario-API.postman_collection.json`.
 

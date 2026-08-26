@@ -2,10 +2,10 @@ services:
   - type: web
     name: elo-solidario-api
     runtime: node
+    plan: free
     rootDir: server
     buildCommand: npm ci
-    preDeployCommand: npm run db:migrate
-    startCommand: npm start
+    startCommand: npm run start:production
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
