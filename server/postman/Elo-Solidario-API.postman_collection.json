@@ -1,0 +1,69 @@
+{
+  "info": {
+    "name": "Elo Solidário API",
+    "description": "Coleção inicial para testar a API REST do Elo Solidário.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3333/api"
+    },
+    {
+      "key": "necessidadeId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health check",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "Listar necessidades",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/necessidades?prioridade=urgente"
+      }
+    },
+    {
+      "name": "Cadastrar necessidade",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"item\": \"Água potável\",\n  \"categoria\": \"Água\",\n  \"local\": \"Centro Comunitário\",\n  \"quantidade\": 100,\n  \"unidade\": \"garrafas\",\n  \"prioridade\": \"urgente\"\n}"
+        },
+        "url": "{{baseUrl}}/necessidades"
+      }
+    },
+    {
+      "name": "Cadastrar voluntário",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Nome do voluntário\",\n  \"email\": \"voluntario@example.com\",\n  \"telefone\": \"(13) 99999-9999\",\n  \"disponibilidade\": \"manha\"\n}"
+        },
+        "url": "{{baseUrl}}/voluntarios"
+      }
+    },
+    {
+      "name": "Registrar interesse em doação",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"necessidadeId\": \"{{necessidadeId}}\",\n  \"nomeDoador\": \"Nome do doador\",\n  \"contato\": \"doador@example.com\",\n  \"quantidade\": 10\n}"
+        },
+        "url": "{{baseUrl}}/interesses-doacao"
+      }
+    }
+  ]
+}

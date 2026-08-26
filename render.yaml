@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: elo-solidario-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm ci
+    preDeployCommand: npm run db:migrate
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_SSL
+        value: "true"
+      - key: FRONTEND_URL
+        value: https://elo-solidario.vercel.app
