@@ -19,6 +19,7 @@ display: flex;
 align-items: center;
 gap: 12px;
 color: white;  
+text-decoration: none;
 
 h1 {      
 font-size: 1.8rem;
@@ -64,6 +65,28 @@ height: auto;
   }
 }
 
+.active { color: white !important; }
+
+.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  border-radius: 3px;
+  background: #64ffda;
+}
+
+.menuButton {
+  display: none;
+  border: 0;
+  background: transparent;
+  color: white;
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+
 
 @media (max-width: 850px) {
   .header {
@@ -86,29 +109,48 @@ height: auto;
   }
 
   .container {
-    flex-direction: column; 
-    gap: 1.5rem;
-    text-align: center;
+    position: relative;
+    align-items: center;
   }
 
   .logo {
-    flex-direction: column;
+    max-width: calc(100% - 52px);
     
     div {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
     }
     
     p {
-      max-width: 260px;
-      margin: 5px auto 0;
+      max-width: 240px;
+      margin: 5px 0 0;
     }
   }
 
+  .imgLogo { width: 68px; }
+  .logo h1 { font-size: 1.25rem; }
+  .logo p { font-size: 0.78rem; }
+
+  .menuButton { display: inline-flex; align-items: center; justify-content: center; }
+
   .nav {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    top: calc(100% + 1rem);
+    left: 0;
     width: 100%;
-    justify-content: center;
-    flex-wrap: wrap; 
+    padding: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.4rem;
+    border-radius: 10px;
+    background: #0f2f4f;
+    box-shadow: 0 12px 24px rgba(0,0,0,.25);
+
+    .link { padding: .8rem; }
   }
+
+  .nav.open { display: flex; }
 }

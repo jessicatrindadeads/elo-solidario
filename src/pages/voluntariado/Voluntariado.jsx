@@ -1,16 +1,26 @@
 import S from "./voluntariado.module.scss";
+import { useState } from "react";
 
 import caixa from "../../assets/img/alimentos.webp";
 import caminhao from "../../assets/img/caminhao.jpeg";
 import prancheta from "../../assets/img/prancheta.jpeg";
 
 export default function Voluntariado() {
+  const [mensagem, setMensagem] = useState("");
   const acoes = [
     { id: 1, titulo: "Separação de Doações", local: "Centro de Triagem", periodo: "Manhã", imagem: caixa,},
     { id: 2, titulo: "Distribuição de Doações", local: "Bairros Afetados", periodo: "Tarde", imagem: caminhao,},
     { id: 3, titulo: "Apoio Logístico", local: "Centro de Apoio", periodo: "Noite", imagem: prancheta,},
     
   ];
+
+  function cadastrarVoluntario(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const nome = new FormData(form).get("nome");
+    setMensagem(`Cadastro de ${nome} recebido para demonstração.`);
+    form.reset();
+  }
 
   return (
     <main className={S.mainVoluntariado}>
@@ -27,7 +37,7 @@ export default function Voluntariado() {
           <div className={S.formularioVoluntario}>
             <h2>Quero ser Voluntário</h2>
 
-            <form>
+            <form onSubmit={cadastrarVoluntario}>
               <div className={S.campo}>
                 <label htmlFor="nome">Nome completo</label>
 
@@ -36,6 +46,7 @@ export default function Voluntariado() {
                   id="nome"
                   name="nome"
                   placeholder="Digite seu nome"
+                  required
                 />
               </div>
 
@@ -47,6 +58,7 @@ export default function Voluntariado() {
                   id="email"
                   name="email"
                   placeholder="Digite seu e-mail"
+                  required
                 />
               </div>
 
@@ -58,6 +70,8 @@ export default function Voluntariado() {
                   id="telefone"
                   name="telefone"
                   placeholder="(00) 00000-0000"
+                  inputMode="tel"
+                  required
                 />
               </div>
 
@@ -69,6 +83,7 @@ export default function Voluntariado() {
                 <select
                   id="disponibilidade"
                   name="disponibilidade"
+                  required
                 >
                   <option value="">
                     Selecione sua disponibilidade
@@ -89,6 +104,7 @@ export default function Voluntariado() {
               >
                 Enviar Cadastro
               </button>
+              <p className={S.feedback} role="status" aria-live="polite">{mensagem}</p>
             </form>
           </div>
 

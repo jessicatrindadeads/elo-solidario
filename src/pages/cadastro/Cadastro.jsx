@@ -1,7 +1,18 @@
 import S from "./cadastro.module.scss";
 import cadastroImg from "../../assets/img/cadastro.jpeg";
+import { useState } from "react";
 
 export default function Cadastro() {
+  const [mensagem, setMensagem] = useState("");
+
+  function cadastrar(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const item = new FormData(form).get("item");
+    setMensagem(`Necessidade de ${item} cadastrada para demonstração.`);
+    form.reset();
+  }
+
   return (
     <main className={S.mainCadastro}>
       <section className={S.containerCadastro}>
@@ -14,7 +25,7 @@ export default function Cadastro() {
             </p>
           </div>
 
-          <form>
+          <form onSubmit={cadastrar}>
             <div className={S.campo}>
               <label htmlFor="item">
                 Item <strong>*</strong>
@@ -25,6 +36,7 @@ export default function Cadastro() {
                 id="item"
                 name="item"
                 placeholder="Ex: Água, Alimentos, Roupas..."
+                required
               />
             </div>
 
@@ -38,6 +50,7 @@ export default function Cadastro() {
                 id="local"
                 name="local"
                 placeholder="Ex: Centro Comunitário, Escola Municipal..."
+                required
               />
             </div>
 
@@ -53,6 +66,7 @@ export default function Cadastro() {
                   name="quantidade"
                   placeholder="Ex: 100"
                   min="1"
+                  required
                 />
               </div>
 
@@ -76,7 +90,7 @@ export default function Cadastro() {
                 Prioridade <strong>*</strong>
               </label>
 
-              <select id="prioridade" name="prioridade">
+              <select id="prioridade" name="prioridade" required>
                 <option value="">Selecione a prioridade</option>
                 <option value="urgente">Urgente</option>
                 <option value="importante">Importante</option>
@@ -87,6 +101,7 @@ export default function Cadastro() {
             <button type="submit" className={S.btnCadastrar}>
               Cadastrar Necessidade
             </button>
+            <p className={S.feedback} role="status" aria-live="polite">{mensagem}</p>
           </form>
         </div>
 

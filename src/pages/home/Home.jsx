@@ -3,7 +3,8 @@ import Imagem from "../../assets/img/ajuda.jpeg";
 import Garrafa from "../../assets/img/aguapotavel.png";
 import Alimento from "../../assets/img/alimentos.webp";
 import Roupa from "../../assets/img/camiseta.webp";
-import InfoCard from "../../components/infoCard/InfoCard";
+import InfoCard from "../../components/infoCard/infoCard";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -13,8 +14,8 @@ export default function Home() {
           <h1>Ajude quem precisa. <br /> Transforme vidas!</h1>
           <p>Encontre necessidades urgentes e faça sua doação para quem mais precisa neste momento.</p>
           <div className={S.botoesDoacao}>
-            <button className={S.btnDoacao}>Ver Doações</button>
-            <button className={S.btnAjuda}>Quero Ajudar</button>
+            <Link className={S.btnDoacao} to="/doacoes">Ver Doações</Link>
+            <Link className={S.btnAjuda} to="/voluntariado">Quero Ajudar</Link>
           </div>
         </div>
         <div className={S.imagemDoacao}>
@@ -25,7 +26,7 @@ export default function Home() {
       <section className={S.needsSection}>
         <div className={S.needsHeader}>
           <h2>Necessidades Urgentes</h2>
-          <a href="/doacoes">Ver todas →</a>
+          <Link to="/doacoes">Ver todas →</Link>
         </div>
 
         <div className={S.needsGrid}>
@@ -60,4 +61,3 @@ export default function Home() {
     </main>
   );
 }
-
