@@ -1,5 +1,6 @@
 import S from "./voluntariado.module.scss";
 import { useState } from "react";
+import { api, getApiError } from "../../services/api";
 
 import caixa from "../../assets/img/alimentos.webp";
 import caminhao from "../../assets/img/caminhao.jpeg";
@@ -7,6 +8,7 @@ import prancheta from "../../assets/img/prancheta.jpeg";
 
 export default function Voluntariado() {
   const [mensagem, setMensagem] = useState("");
+  const [enviando, setEnviando] = useState(false);
   const acoes = [
     { id: 1, titulo: "Separação de Doações", local: "Centro de Triagem", periodo: "Manhã", imagem: caixa,},
     { id: 2, titulo: "Distribuição de Doações", local: "Bairros Afetados", periodo: "Tarde", imagem: caminhao,},
@@ -14,12 +16,21 @@ export default function Voluntariado() {
     
   ];
 
-  function cadastrarVoluntario(event) {
+  async function cadastrarVoluntario(event) {
     event.preventDefault();
     const form = event.currentTarget;
-    const nome = new FormData(form).get("nome");
-    setMensagem(`Cadastro de ${nome} recebido para demonstração.`);
-    form.reset();
+    const dados = Object.fromEntries(new FormData(form));
+    setEnviando(true);
+    setMensagem("");
+    try {
+      await api.post("/voluntarios", dados);
+      setMensagem(`Cadastro de ${dados.nome} recebido com sucesso.`);
+      form.reset();
+    } catch (error) {
+      setMensagem(getApiError(error, "Não foi possível enviar o cadastro. Tente novamente."));
+    } finally {
+      setEnviando(false);
+    }
   }
 
   return (
@@ -101,8 +112,9 @@ export default function Voluntariado() {
               <button
                 type="submit"
                 className={S.btnCadastro}
+                disabled={enviando}
               >
-                Enviar Cadastro
+                {enviando ? "Enviando..." : "Enviar Cadastro"}
               </button>
               <p className={S.feedback} role="status" aria-live="polite">{mensagem}</p>
             </form>

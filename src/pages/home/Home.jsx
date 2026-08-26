@@ -3,10 +3,28 @@ import Imagem from "../../assets/img/ajuda.jpeg";
 import Garrafa from "../../assets/img/aguapotavel.png";
 import Alimento from "../../assets/img/alimentos.webp";
 import Roupa from "../../assets/img/camiseta.webp";
+import Higiene from "../../assets/img/higieneproduto.png";
 import InfoCard from "../../components/infoCard/infoCard";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { api } from "../../services/api";
+
+const imagens = { Água: Garrafa, Alimentos: Alimento, Roupas: Roupa, Higiene };
+const ordem = { urgente: 0, importante: 1, normal: 2 };
 
 export default function Home() {
+  const [necessidades, setNecessidades] = useState([]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    api.get('/necessidades?status=aberta', { signal: controller.signal })
+      .then(({ data }) => setNecessidades(
+        [...data.data].sort((a, b) => ordem[a.prioridade] - ordem[b.prioridade]).slice(0, 3),
+      ))
+      .catch(() => setNecessidades([]));
+    return () => controller.abort();
+  }, []);
+
   return (
     <main className={S.home}>      
       <section className={S.homeSection}>
@@ -30,32 +48,17 @@ export default function Home() {
         </div>
 
         <div className={S.needsGrid}>
-         <InfoCard
-          img={Garrafa}
-          alt="Água Potável"
-          subtitulo="Água Potável"
-          paragrafo="Centro Comunitário • 100 garrafas"
-          textBotao="Urgente"
-          status="urgente"
-        />
-
-          <InfoCard
-            img={Alimento}
-            alt="Alimentos Não Perecíveis"
-            subtitulo="Alimentos Não Perecíveis"
-            paragrafo="Escola Municipal • 50 unidades"
-            textBotao="Urgente"
-            status="urgente"
-          />
-
-          <InfoCard
-            img={Roupa}
-            alt="Roupas"
-            subtitulo="Roupas"
-            paragrafo="Abrigo São José • 30 conjuntos"
-            textBotao="Importante"
-            status="importante"
-          />
+          {necessidades.map((necessidade) => (
+            <InfoCard
+              key={necessidade.id}
+              img={imagens[necessidade.categoria] || Alimento}
+              alt={necessidade.item}
+              subtitulo={necessidade.item}
+              paragrafo={`${necessidade.local} • ${necessidade.quantidade} ${necessidade.unidade}`}
+              textBotao={necessidade.prioridade.charAt(0).toUpperCase() + necessidade.prioridade.slice(1)}
+              status={necessidade.prioridade}
+            />
+          ))}
         </div>
       </section>
     </main>
