@@ -1,24 +1,24 @@
 import S from './infoCard.module.scss';
 
-export default function InfoCard(props) {
+export default function InfoCard({ img, alt, subtitulo, paragrafo, textBotao, status }) {
     return (
         <article className={S.article}>
             <div className={S.cardImage}>
-                <img src={props.img} alt={props.alt} />
+                <img src={img} alt={alt} />
             </div>
             
             <div className={S.cardContent}>
-                <h2>{props.subtitulo}</h2>
-                <p>{props.paragrafo}</p>
-                <button
+                <h2>{subtitulo}</h2>
+                <p>{paragrafo}</p>
+                <span
                 className={
-                    props.status === "importante"
+                    status === "importante"
                     ? `${S.btnImportante}`
                     : `${S.btnUrgente}`
                 }
                 >
-                {props.textBotao}
-                </button>
+                {textBotao}
+                </span>
             </div>
         </article>
     );

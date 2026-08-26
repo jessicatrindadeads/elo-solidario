@@ -1,0 +1,24 @@
+.page {
+  min-height: 60vh;
+  padding: 5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #f8f9fa;
+
+  h1 { margin: 0 0 0.75rem; }
+  p { color: #647084; }
+  a {
+    margin-top: 1rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 8px;
+    background: #2fa34f;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+  }
+}
+
+.code { margin: 0; color: #2fa34f !important; font-size: 5rem; font-weight: 800; }

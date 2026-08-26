@@ -1,6 +1,7 @@
 import S from "./footer.module.scss";
 import Logo from "../../assets/img/logo.png";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaTwitter, FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -19,20 +20,18 @@ export default function Footer() {
           <nav className={S.section}>
             <h3>Navegação</h3>
             <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/doacao">Doações</a></li>
-              <li><a href="/cadastro">Cadastro</a></li>
-              <li><a href="/voluntariado">Voluntariado</a></li>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/doacoes">Doações</Link></li>
+              <li><Link to="/cadastro">Cadastro</Link></li>
+              <li><Link to="/voluntariado">Voluntariado</Link></li>
             </ul>
           </nav>
 
           <nav className={S.section}>
             <h3>Institucional</h3>
             <ul>
-              <li><a href="#">Sobre Nós</a></li>
-              <li><a href="#">Como Funciona</a></li>
-              <li><a href="#">Transparência</a></li>
-              <li><a href="#">Fale Conosco</a></li>
+              <li>Projeto educacional</li>
+              <li>Dados demonstrativos</li>
             </ul>
           </nav>
 
@@ -48,17 +47,17 @@ export default function Footer() {
           <div className={S.section}>
             <h3>Redes Sociais</h3>
             <div className={S.socials}>
-              <a href="#"><FaFacebookF /></a>
-              <a href="#"><FaInstagram /></a>
-              <a href="#"><FaWhatsapp /></a>
-              <a href="#"><FaTwitter /></a>
+              <span aria-label="Facebook"><FaFacebookF /></span>
+              <span aria-label="Instagram"><FaInstagram /></span>
+              <span aria-label="WhatsApp"><FaWhatsapp /></span>
+              <span aria-label="Twitter"><FaTwitter /></span>
             </div>
           </div>
 
         </div>
 
         <div className={S.copyright}>
-          <p>© 2026 Elo Solidário. Todos os direitos reservados.</p>
+          <p>© {new Date().getFullYear()} Elo Solidário. Projeto educacional.</p>
         </div>
       </div>
     </footer>
