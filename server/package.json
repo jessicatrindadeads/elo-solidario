@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
+    "start:production": "node src/production.js",
     "test": "node --test",
     "db:migrate": "node src/database/migrate.js"
   },
